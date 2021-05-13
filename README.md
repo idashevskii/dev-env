@@ -2,6 +2,14 @@
 # Services
 - GitLab
 - Redmine
+- GitLab Runner
+
+
+# GitLab Runner
+
+Register:
+
+    $ docker-compose exec gitlab-runner gitlab-runner register
 
 
 # Redmine

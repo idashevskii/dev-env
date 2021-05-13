@@ -1,9 +1,11 @@
 # https://docs.gitlab.com/omnibus/docker/
 services:
+
+  # 
   gitlab:
+    container_name: gitlab
     image: 'gitlab/gitlab-ce:latest'
     restart: unless-stopped
-    container_name: gitlab
     hostname: '$GITLAB_HOST'
     env_file:
       ./.env
@@ -19,7 +21,19 @@ services:
       - '$GITLAB_HOME/logs:/var/log/gitlab'
       - '$GITLAB_HOME/data:/var/opt/gitlab'
 
+  # https://docs.gitlab.com/runner/install/docker.html
+  gitlab-runner:
+    container_name: gitlab-runner
+    image: 'gitlab/gitlab-runner:latest'
+    restart: unless-stopped
+
+    volumes:
+      - '/var/run/docker.sock:/var/run/docker.sock'
+      - '$GITLAB_RUNNER_HOME/config:/etc/gitlab-runner'
+
+  # 
   redmine:
+    container_name: redmine
     image: redmine
     restart: unless-stopped
     env_file:
@@ -35,7 +49,9 @@ services:
       - '$REDMINE_HOME/themes:/usr/src/redmine/public/themes'
       - '$REDMINE_HOME/plugins:/usr/src/redmine/public/plugins'
 
+  # 
   redmine-db:
+    container_name: redmine-db
     image: mysql:5.7
     restart: unless-stopped
     env_file:
