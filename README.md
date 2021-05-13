@@ -7,6 +7,8 @@
 
 # GitLab Runner
 
+https://docs.gitlab.com/runner/register/
+
 Register:
 
     $ docker-compose exec gitlab-runner gitlab-runner register
