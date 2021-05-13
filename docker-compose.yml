@@ -1,0 +1,47 @@
+# https://docs.gitlab.com/omnibus/docker/
+services:
+  gitlab:
+    image: 'gitlab/gitlab-ce:latest'
+    restart: unless-stopped
+    container_name: gitlab
+    hostname: '$GITLAB_HOST'
+    env_file:
+      ./.env
+    environment:
+      GITLAB_OMNIBUS_CONFIG: |
+        external_url '$GITLAB_PROTOCOL://$GITLAB_HOST:$GITLAB_PORT';
+        gitlab_rails['gitlab_shell_ssh_port'] = $GITLAB_SSH_PORT;
+    ports:
+      - '$GITLAB_PORT:$GITLAB_PORT'
+      - '$GITLAB_SSH_PORT:22'
+    volumes:
+      - '$GITLAB_HOME/config:/etc/gitlab'
+      - '$GITLAB_HOME/logs:/var/log/gitlab'
+      - '$GITLAB_HOME/data:/var/opt/gitlab'
+
+  redmine:
+    image: redmine
+    restart: unless-stopped
+    env_file:
+      ./.env
+    environment:
+      REDMINE_DB_MYSQL: db
+    ports:
+      - $REDMINE_PORT:3000
+    links:
+      - redmine-db:db
+    volumes:
+      - '$REDMINE_HOME/files:/usr/src/redmine/files'
+      - '$REDMINE_HOME/themes:/usr/src/redmine/public/themes'
+      - '$REDMINE_HOME/plugins:/usr/src/redmine/public/plugins'
+
+  redmine-db:
+    image: mysql:5.7
+    restart: unless-stopped
+    env_file:
+      ./.env
+    environment:
+      MYSQL_ROOT_PASSWORD: '$REDMINE_DB_PASSWORD'
+      MYSQL_DATABASE: redmine
+    volumes:
+      - '$REDMINE_HOME/db:/var/lib/mysql'
