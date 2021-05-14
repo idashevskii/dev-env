@@ -1,8 +1,9 @@
 
 # Services
 - GitLab
-- Redmine
 - GitLab Runner
+- GitLab Registry
+- Redmine
 
 # SSL
 
