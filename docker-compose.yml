@@ -27,9 +27,14 @@ services:
   # https://docs.gitlab.com/runner/install/docker.html
   gitlab-runner:
     container_name: gitlab-runner
-    image: 'gitlab/gitlab-runner:latest'
+    build:
+      context: .
+      dockerfile: gitlab-runner.Dockerfile
+      args:
+        GITLAB_CRT: '/dist/$GITLAB_HOST.crt'
     restart: unless-stopped
-
+    env_file:
+      ./.env
     volumes:
       - '/var/run/docker.sock:/var/run/docker.sock'
       - '$GITLAB_RUNNER_HOME/config:/etc/gitlab-runner'

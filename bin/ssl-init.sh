@@ -12,16 +12,15 @@ cd "$DIR"
 source ".env"
 
 SSL_DIR="$GITLAB_HOME/config/ssl"
+DIST_DIR="./dist"
 
 mkdir -p "$SSL_DIR"
+mkdir -p "$DIST_DIR"
 
 generate(){
   host="$1"
   keyFile="$SSL_DIR/$host.key"
   bundleFile="$SSL_DIR/$host.crt"
-  
-  echo $keyFile
-  echo $bundleFile
 
   openssl req \
     -newkey rsa:4096 -nodes -sha256 -keyout "$keyFile" \
@@ -30,6 +29,9 @@ generate(){
 
   # strip pass
   openssl rsa -in "$keyFile" -out "$keyFile"
+
+  # copy to current context, for Dockerfile build
+  cp "$bundleFile" "$DIST_DIR"
 }
 
 generate "$GITLAB_HOST"
