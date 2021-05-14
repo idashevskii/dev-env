@@ -4,6 +4,22 @@
 - Redmine
 - GitLab Runner
 
+# SSL
+
+To Generate Self Signed certs, run `./bin/ssl-init.sh`
+
+*Note*: `.env` should be configured first.
+
+Make generated cert trusted: https://docs.docker.com/registry/insecure/.
+
+In ArchLinux:
+    
+    $ trust anchor $GITLAB_HOME/config/ssl/$GITLAB_HOST.key
+
+If Registry is runing on different host:
+
+    $ trust anchor $GITLAB_HOME/config/ssl/$GITLAB_REGISTRY_HOST.key
+
 
 # GitLab Runner
 

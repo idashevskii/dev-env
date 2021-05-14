@@ -11,10 +11,13 @@ services:
       ./.env
     environment:
       GITLAB_OMNIBUS_CONFIG: |
-        external_url '$GITLAB_PROTOCOL://$GITLAB_HOST:$GITLAB_PORT';
+        external_url 'https://$GITLAB_HOST:$GITLAB_PORT';
+        registry_external_url 'https://$GITLAB_REGISTRY_HOST:$GITLAB_REGISTRY_PORT';
         gitlab_rails['gitlab_shell_ssh_port'] = $GITLAB_SSH_PORT;
+        letsencrypt['enable'] = false;
     ports:
       - '$GITLAB_PORT:$GITLAB_PORT'
+      - '$GITLAB_REGISTRY_PORT:$GITLAB_REGISTRY_PORT'
       - '$GITLAB_SSH_PORT:22'
     volumes:
       - '$GITLAB_HOME/config:/etc/gitlab'
