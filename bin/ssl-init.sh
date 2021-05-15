@@ -12,10 +12,10 @@ cd "$DIR"
 source ".env"
 
 SSL_DIR="$GITLAB_HOME/config/ssl"
-DIST_DIR="./dist"
+SSL_RUNNER_DIR="$GITLAB_RUNNER_HOME/config/certs"
 
 mkdir -p "$SSL_DIR"
-mkdir -p "$DIST_DIR"
+mkdir -p "$SSL_RUNNER_DIR"
 
 generate(){
   host="$1"
@@ -30,8 +30,9 @@ generate(){
   # strip pass
   openssl rsa -in "$keyFile" -out "$keyFile"
 
-  # copy to current context, for Dockerfile build
-  cp "$bundleFile" "$DIST_DIR"
+  # copy for runner
+  # https://docs.gitlab.com/runner/configuration/tls-self-signed.html
+  cp "$bundleFile" "$SSL_RUNNER_DIR"
 }
 
 generate "$GITLAB_HOST"
