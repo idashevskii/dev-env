@@ -17,9 +17,20 @@ In ArchLinux:
     
     $ trust anchor $GITLAB_HOME/config/ssl/$GITLAB_HOST.key
 
-If Registry is runing on different host:
+If Registry is runing on different host (e.g. also for ArchLinux):
 
     $ trust anchor $GITLAB_HOME/config/ssl/$GITLAB_REGISTRY_HOST.key
+
+Add cert to GitLab variable `REGISTRY_CRT` with cert content. In `.gitlab-ci.yml` add:
+
+    variables:
+      REGISTRY_CRT: "$REGISTRY_CRT"
+    services:
+      - name: docker:20-dind
+        command:
+            - /bin/sh
+            - -c
+            - echo "$REGISTRY_CRT" > /usr/local/share/ca-certificates/registry.crt && update-ca-certificates && dockerd-entrypoint.sh
 
 
 # GitLab Runner
