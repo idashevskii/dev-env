@@ -5,6 +5,16 @@
 - GitLab Registry
 - Redmine
 
+# Prod
+
+For prod deploys to Docker/Docker Swarm set-up standalone Docker Runner on Prod machine.
+
+https://github.com/tiangolo/dockerswarm.rocks/blob/master/docs/gitlab-ci.md
+
+See ./bin/prod-runner.sh
+
+** NOTE! ** Make sure your job uses specified runner. User tags section in `.gitlab-ci.yml`
+
 # SSL
 
 To Generate Self Signed certs, run `./bin/ssl-init.sh`
@@ -15,11 +25,11 @@ Make generated cert trusted: https://docs.docker.com/registry/insecure/.
 
 In ArchLinux:
     
-    $ trust anchor $GITLAB_HOME/config/ssl/$GITLAB_HOST.key
+    $ trust anchor $GITLAB_HOME/config/ssl/$GITLAB_HOST.crt
 
 If Registry is runing on different host (e.g. also for ArchLinux):
 
-    $ trust anchor $GITLAB_HOME/config/ssl/$GITLAB_REGISTRY_HOST.key
+    $ trust anchor $GITLAB_HOME/config/ssl/$GITLAB_REGISTRY_HOST.crt
 
 Add cert to GitLab variable `REGISTRY_CRT` with cert content. In `.gitlab-ci.yml` add:
 
