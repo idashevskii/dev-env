@@ -70,3 +70,18 @@ And then execute output as SQL query
 ## Open Source Kanban
 
 - https://git.framasoft.org/infopiiaf/redhopper
+
+
+
+
+# Docker Swarm Setup
+
+    # Manager innernal network IP
+    MANAGER_ADDR="10.9.8.1"
+
+    # On Manager:
+    docker swarm init --advertise-addr $MANAGER_ADDR
+
+    # On Nodes - use output command from prev stap. To show it again:
+    docker swarm join-token worker
+

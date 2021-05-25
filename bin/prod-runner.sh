@@ -8,7 +8,8 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )"/../ && pwd )"
 
 cd "$DIR"
 
-GITLAB_URL=https://gitlab.example.com/
+GITLAB_HOST=gitlab.example.com
+GITLAB_URL=https://${GITLAB_HOST}:8080/
 GITLAB_TOKEN=the-token
 PROD_MACHINE_TITLE="Project Prod Runner"
 
@@ -17,14 +18,14 @@ PROD_MACHINE_TITLE="Project Prod Runner"
 docker run -d \
     --name gitlab-runner \
     --restart unless-stopped \
-    -v /home/user/gitlab-runner:/etc/gitlab-runner \
+    -v $PATH_TO_VOLUMES/gitlab-runner:/etc/gitlab-runner \
     -v /var/run/docker.sock:/var/run/docker.sock \
     gitlab/gitlab-runner:latest
 
 
 # Trust Gitlab Self-Signed SSL if needed
 
-# Copy CRT file into container in folder /home/user/gitlab-runner/gitlab.example.com.crt
+# Copy CRT file into container in folder $PATH_TO_VOLUMES/gitlab-runner/certs/${GITLAB_HOST}.crt
 
 # Register
 
