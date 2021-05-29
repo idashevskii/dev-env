@@ -85,3 +85,13 @@ And then execute output as SQL query
     # On Nodes - use output command from prev stap. To show it again:
     docker swarm join-token worker
 
+You may need to login to Private Registry on each node from root.
+
+You may not login because error:
+
+    Error saving credentials: error storing credentials - err: exit status 1, out: `Cannot autolaunch D-Bus without X11 $DISPLAY`
+
+To solve that on Debian it is possible to remove (not recommended solution) golang-docker-credential-helpers without removing docker-compose:
+
+    dpkg -r --ignore-depends=golang-docker-credential-helpers golang-docker-credential-helpers
+
