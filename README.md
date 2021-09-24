@@ -31,16 +31,16 @@ If Registry is runing on different host (e.g. also for ArchLinux):
 
     $ trust anchor $GITLAB_HOME/config/ssl/$GITLAB_REGISTRY_HOST.crt
 
-Add cert to GitLab variable `REGISTRY_CRT` with cert content. In `.gitlab-ci.yml` add:
+## Docker-in-docker (dind)
 
-    variables:
-      REGISTRY_CRT: "$REGISTRY_CRT"
+For dind, additionaly, define corresponding serivice in `.gitlab-ci.yml` as following:
+
     services:
-      - name: docker:20-dind
-        command:
-            - /bin/sh
-            - -c
-            - echo "$REGISTRY_CRT" > /usr/local/share/ca-certificates/registry.crt && update-ca-certificates && dockerd-entrypoint.sh
+      - name: docker:dind
+        entrypoint: ["dockerd-entrypoint.sh"]
+        command: ["--insecure-registry", "example.com:5000"]
+
+Note! The port of registry is not matching with gitlab port!
 
 
 # GitLab Runner
