@@ -33,7 +33,7 @@ services:
       ./.env
     volumes:
       - '/var/run/docker.sock:/var/run/docker.sock'
-      - '$GITLAB_RUNNER_HOME/config:/etc/gitlab-runner'
+      - '$GITLAB_RUNNER_HOME:/etc/gitlab-runner'
 
   # 
   redmine:

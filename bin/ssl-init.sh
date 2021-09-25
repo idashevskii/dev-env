@@ -12,7 +12,7 @@ cd "$DIR"
 source ".env"
 
 SSL_DIR="$GITLAB_HOME/config/ssl"
-SSL_RUNNER_DIR="$GITLAB_RUNNER_HOME/config/certs"
+SSL_RUNNER_DIR="$GITLAB_RUNNER_HOME/certs"
 
 mkdir -p "$SSL_DIR"
 mkdir -p "$SSL_RUNNER_DIR"

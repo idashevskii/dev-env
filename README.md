@@ -47,10 +47,7 @@ Note! The port of registry is not matching with gitlab port!
 
 https://docs.gitlab.com/runner/register/
 
-Register:
-
-    $ docker-compose exec gitlab-runner gitlab-runner register
-
+See `./bin/configure-runners.sh`
 
 # Redmine
 
